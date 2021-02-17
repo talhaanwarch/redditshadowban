@@ -24,10 +24,11 @@ def code(username):
         # the given sentence appears only if the user is banned or does not exist
 		if "Sorry, nobody on Reddit goes by that name." in html_content:
 			return('The account ' + username +
-      'does not exists, or it is shadowbanned. Please don\'t kill me...')
+      'does not exists, or it is shadowbanned. ')
+		elif 'suspended' in html_content:
+			return ('Account {} is suspended'.format(username))
 		else:
-			return('Everything looks fine for ' + username +
-      '. Heartbeats back to normal...')
+			return('Everything looks fine for ' + username )
 	else:
 		return 1
     
