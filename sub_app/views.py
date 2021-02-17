@@ -37,6 +37,12 @@ headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleW
 def home(request):
 	form=TextForm()
 	if request.method=='POST':
+		form=TextForm(request.POST)
+		
+		if form.is_valid():
+			print('saving')
+			form.save()
+
 		error=True
 		while error:
 		    username=request.POST['username']
@@ -48,9 +54,7 @@ def home(request):
 		    else:
 		        return render(request,'home.html',{'output':res,'form':form})
 		        error=False
-		form=TextForm(request.POST)
-		if form.is_valid():
-			form.save()
+		
 	return render(request,'home.html',{'form':form})
 
 
