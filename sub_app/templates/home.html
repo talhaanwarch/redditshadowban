@@ -1,0 +1,32 @@
+ 
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>RediShadow</title>
+  </head>
+  <body>
+
+  <br>
+  <div style="width:800px; margin:0 auto;" class='container'>
+  <H2>Find if your account is shadow banned by Reddit</H12>
+  <br>
+  <br>
+     <form action="" method="POST" >
+	 {% csrf_token %}
+	 {{ form }}
+	 <input type="submit">
+	 </form>
+
+	<br>
+	<h3> {{ output }} </h3>
+	</div>	
+  </body>
+</html>
+
