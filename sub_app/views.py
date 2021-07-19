@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import TextForm,FileForm
-
+from django.conf import settings
 import requests
 import os
 
@@ -69,12 +69,13 @@ def filehome(request):
 					else:
 						notbanned.append(username)
 						error=False
-
-			banfile = open("sub_app/static/banfile.txt", "w")
+			path=os.path.join(settings.BASE_DIR,'sub_app','static','banfile.txt')
+			print(path)
+			banfile = open(path, "w")
 			banfile.write(''.join(banned))
 			banfile.close()
-
-			notbanfile = open("sub_app/static/notbanfile.txt", "w")
+			path=os.path.join(settings.BASE_DIR,'sub_app','static','notbanfile.txt')
+			notbanfile = open(path, "w")
 			notbanfile.write(''.join(notbanned))
 			notbanfile.close()
 
