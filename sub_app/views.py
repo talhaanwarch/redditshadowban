@@ -1,20 +1,9 @@
 from django.shortcuts import render
-from .forms import TextForm
+from .forms import TextForm,FileForm
 
 import requests
 import os
 
-
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Feb 18 01:28:54 2021
-
-@author: TAC
-"""
-
-
-import requests
-import os
 
 
 def code(username):
@@ -41,7 +30,6 @@ def home(request):
 		form=TextForm(request.POST)
 		
 		if form.is_valid():
-			print('saving')
 			form.save()
 
 		error=True
@@ -59,3 +47,39 @@ def home(request):
 	return render(request,'home.html',{'form':form})
 
 
+def filehome(request):
+	print(request.method)
+	if request.method == 'POST':
+		myform = FileForm(request.POST,request.FILES)
+		if myform.is_valid():
+			myform.save()
+			banned,notbanned=[],[]
+			for line in request.FILES['fileupload']:
+				username = line.decode()  
+				error=True
+				while error:
+					res=code(username)
+					print(res)
+					if 'shadowbanned' in res:
+						banned.append(username)
+						error=False
+					elif res==1:
+						print('retrying')
+						error=True
+					else:
+						notbanned.append(username)
+						error=False
+
+			banfile = open("sub_app/static/banfile.txt", "w")
+			banfile.write(''.join(banned))
+			banfile.close()
+
+			notbanfile = open("sub_app/static/notbanfile.txt", "w")
+			notbanfile.write(''.join(notbanned))
+			notbanfile.close()
+
+			return render(request,'uploadfile.html',{'fileform':FileForm(),'banned':len(banned),'other':len(notbanned)})		
+	else:			
+		form = FileForm()
+		context={'fileform':form}
+		return render(request,'uploadfile.html',context)

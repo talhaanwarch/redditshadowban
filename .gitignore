@@ -1,2 +1,4 @@
 *.pyc
 .env
+*.txt
+django.png

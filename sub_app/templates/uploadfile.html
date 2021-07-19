@@ -8,26 +8,36 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    {% load static %}
     <title>RediShadowCheck</title>
   </head>
   <body>
 
   <br>
   <div style="width:800px; margin:0 auto;" class='container'>
-  <H2>Find if your account is shadow banned by Reddit</H12>
+  <H2>Find accounts is shadow banned by Reddit in bulk</H2>
+  <H3>Only .txt file with username in new line is accepted</H3>
   <br>
   <br>
-     <form action="" method="POST" >
-	 {% csrf_token %}
-	 {{ form }}
-	 <input type="submit">
-	 </form>
+
+   
+  <form action="" method="POST" enctype="multipart/form-data">
+   {% csrf_token %}
+   {{ fileform.as_p }}
+   <input type="submit">
+   </form>
 
 
-	<br>
-	<h3> {{ output }} </h3>
-  <br>
+  {% if other %}
+  Other users found {{ other }} 
+  <a href="{% static 'notbanfile.txt' %}"> Download not Baned File</a>
+  {% endif %}
+  {% if banned %}
+  <a href="{% static 'banfile.txt' %}"> Download Ban File</a>
+  Banned users found {{ banned }} 
+  {% endif %}
+
+<br><br>
   <h4> If you want to contribute, feel free to open a PR at <a href="https://github.com/talhaanwarch/redditshadowban">github repo</a> </h4>
   <h5> If you like the work, please star or fork the <a href="https://github.com/talhaanwarch/redditshadowban">github repo</a> to keep updated</h5>
 	</div>	
